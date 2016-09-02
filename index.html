@@ -5,7 +5,7 @@
     <title>Summer Hangman game</title>
     
         <link rel="stylesheet" href="assets/css/style.css">
-        <script src="assets/javascript/game.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Baloo+Chettan" rel="stylesheet">
 
   </head>
 
@@ -14,25 +14,24 @@
     <div class="wrapper">
     <img src="assets/images/sun.png">
 
-   <h1>Summertime Hangman</h1>
-   <p>Guess what letter I'm thinking of in the box below:</p>
+  <h1>Summertime Hangman</h1>
+       <p>Click any letter to begin</p>
 
-   <p id="spaced"></p>
-   <form name="formular">
-   <input name="guess" type="text" size="5" maxlength="1">
-   <input name="guessbutton" type="button" value="Guess" onClick="myguess()">
+       <p id="wordBlanks">_ _ _ _ _ _ </p>
 
-   <p id="wrongguess">Letters Already Guessed:</p>
+      <div class="sizing">   
+       <p>
+       Letters Already Guessed:  <span id="wrongGuesses"></span><br>
+        Guesses Remaining: <span id="guessesLeft"> 9</span><br>
+        Wins: <span id="winCounter"> 0</span><br>
+        Losses: <span id="lossCounter"> 0</span></p>
+        </div>
 
-    <p id="mylives">Guesses Remaining:</p>
-    <br>
+       <input name="refresh" type="button" value="New Game" onClick="location.reload()">
 
-   <input name="refresh" type="button" value="New Game" onClick="location.reload()">
-
-
-
-</form>   
 </div>
-    
+
+    <script src="https://code.jquery.com/jquery-2.2.3.js" integrity="sha256-laXWtGydpwqJ8JA+X9x2miwmaiKhn8tVmOVEigRNtP4=" crossorigin="anonymous"></script>    
+    <script src="assets/javascript/game.js"></script>
 </body>
 </html>

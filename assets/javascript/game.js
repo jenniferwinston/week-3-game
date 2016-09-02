@@ -1,91 +1,109 @@
 
-  window.onload = init;
+// Global Variables---------
 
-  var hangwords = [
-    ["F", "I", "R", "E", "W", "O", "R", "K", "S"],
-    ["B", "O", "A", "T", "I", "N", "G"],
-    ["H", "O", "T", "D", "O", "G", "S"],
-    ["S", "U", "N", "S", "C", "R", "E", "E", "N"],
-    ["S", "U", "N", "S", "E", "T"],
-    ["V", "A", "C", "A", "T", "I", "O", "N"],
-    ["F", "L", "I", "P", "F", "L", "O", "P", "S"],
-    ["B", "A", "R", "B", "E", "Q", "U", "E"],
-  ]
+// Array of words
+var wordList = ["fireworks", "boating", "hotdogs", "sunscreen", "sunset", "vacation", "flipflops", "barbeque"];
 
-  var random = Math.floor((Math.random()*(hangwords.length-1)));
+var chosenWord = "";
+var lettersinChosenWord = [];
+var numBlanks = 0;
+var blanksandSuccess = [];
+var wrongGuess = [];
 
-  var picked = hangwords[random];
-  var category = new Array(picked.length);
-  var word = 0;
+//Counters
+var winCount = 0;
+var lossCount = 0;
+var numGuesses = 9;
 
 
-  //underscored spaces guesses
-  for (var i=0; i < category.length; i++){
-      category[i] = "_ ";
-  }
+//Functions ----------------
 
-  function printCategory(){
-    for (var i= 0; i < category.length; i++){
-      var spaced = document.getElementById("spaced");
-      var wordspaced = document.createTextNode(category[i]);
-      spaced.appendChild(wordspaced);
+function startGame() {
+  //randomly select word, split into letters, count the length
+  chosenWord = wordList[Math.floor(Math.random()* wordList.length)];
+  lettersinChosenWord = chosenWord.split("");
+  numBlanks = lettersinChosenWord.length;
+    console.log(chosenWord);
+    console.log(numBlanks);
+
+  //reset variables on each game
+  numGuesses = 9;
+  blanksandSuccess = [];
+  wrongGuess = [];
+
+      // loop through word and replace with letter
+       for (var i=0; i < numBlanks; i++){
+          blanksandSuccess.push("_");
+       }  
+      console.log(blanksandSuccess);
+
+      //print in the html
+      document.getElementById("guessesLeft").innerHTML = numGuesses;
+      document.getElementById("wordBlanks").innerHTML = blanksandSuccess.join(" ");
+      document.getElementById("wrongGuesses").innerHTML = wrongGuess.join(" ");
+
+}
+
+// check if letter exsists in word
+function checkLetters(letter) {
+    var letterInWord = false;
+      for (var i=0; i < numBlanks; i++) {
+          if(chosenWord[i] == letter) {
+          letterInWord = true;
+        }
+      }
+
+      if(letterInWord) {
+          for (var i =0; i < numBlanks; i++){
+                if(chosenWord[i] == letter) {
+                  blanksandSuccess[i] = letter;
+                }
+          } console.log(blanksandSuccess);
+      }
+      else {
+          wrongGuess.push(letter);
+          numGuesses--;
+      }
+}
+
+
+// game complete function
+function gameComplete() {
+    // update html to show updates
+    document.getElementById("guessesLeft").innerHTML = numGuesses;
+    document.getElementById("wordBlanks").innerHTML = blanksandSuccess.join(" ");
+    document.getElementById("wrongGuesses").innerHTML = wrongGuess.join(" ");
+
+    // all letters guessed correct
+    if (lettersinChosenWord.toString() == blanksandSuccess.toString()) {
+          winCount++;
+          alert("You win!");
+          document.getElementById("winCounter").innerHTML = winCount;
+          startGame();
     }
-  }
 
-  // checks guessed letters
-  var myguess = function(){
-    var f =document.formular;
-    var b =f.elements["guess"];
-    var marks = b.value;
-    marks = marks.toUpperCase();
-      for (var i =0; i < picked.length; i++) {
-          if (picked[i] === marks) {
-                category[i] = marks + " ";
-                var winner = true;
+          else if(numGuesses == 0){
+              lossCount++;
+              alert("You Lost.");
+              document.getElementById("lossCounter").innerHTML = lossCount;
+              startGame();
+              console.log(lossCount);
+              console.log(winCount);
           }
-        b.value ="";
-      }
-
-      //replaces with correct guess
-      var spaced = document.getElementById("spaced");
-          spaced.innerHTML="";
-        printCategory();
-
-
-      // put into wrong letters
-      if(!winner) {
-          var wrongguess = document.getElementById("wrongguess");
-          var wordspaced = document.createTextNode(" " + marks);
-          wrongguess.appendChild(wordspaced);
-          word++;
-      }
-
-       // show remaining guesses ---------------------------------------------fix
-        
-
-
-
-      //have letters been found
-      var found = true;
-          for (var i =0; i < category.length; i++) {
-              if(category[i] === "_ ") {
-                found = false;
-              }  
-          }
-              if(found){
-              alert("You win!");
-              }
-
-              if(found ===6) {
-              alert("You lost, sorry.");
-              }
-
-
 }
 
 
 
-function init(){
-  printCategory();
+
+// Start game process ---------
+
+startGame();
+
+// on key clicks capture
+document.onkeyup = function(event) {
+    letterGuessed = String.fromCharCode(event.keyCode).toLowerCase();
+    checkLetters(letterGuessed);
+    gameComplete();
 }
+
 

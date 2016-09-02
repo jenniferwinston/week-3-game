@@ -4,7 +4,7 @@
 
 body {
   background: teal;
-  font-family: 'Yatra One', cursive;
+  font-family: 'Baloo Chettan', cursive;
   color: #fff;
   height: 100%;
   text-align: center;
@@ -13,25 +13,30 @@ body {
 
 
 h1 {
-  font-family: 'Yatra One', cursive;
+  font-family: 'Baloo Chettan', cursive;
   margin: 5px 0;
-  font-size: 50px;
+  font-size: 60px;
   color: orange;
   margin-top:  100px;
 }
 
 
 p {
-  font-size: 22px;
+  font-size: 30px;
 }
 
 input {
   background: #fff;
   color: teal;
+  border-radius: 20px;
   font-size: 18px;
   padding: 18px 10px;
   width: 120px;
   margin: 10px;
+}
+
+.sizing {
+  font-size: 25px;
 }
 
 input:hover {
