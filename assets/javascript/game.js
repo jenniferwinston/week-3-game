@@ -61,8 +61,12 @@ function checkLetters(letter) {
           } console.log(blanksandSuccess);
       }
       else {
+              if(wrongGuess.indexOf(letter)> -1){
+                console.log("Letter already guessed");
+              } else{
           wrongGuess.push(letter);
           numGuesses--;
+        }
       }
 }
 
